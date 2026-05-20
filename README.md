@@ -27,7 +27,8 @@ weighted =
 ```
 
 Crunch, salt balance, and dust factor can be rated from 0-13. A value of 10 is ideal;
-values above 10 are treated as overload and reduce the score.
+values below 10 are penalized by their distance from 10, and values above 10 receive
+double-distance penalty.
 
 ## Tech stack
 

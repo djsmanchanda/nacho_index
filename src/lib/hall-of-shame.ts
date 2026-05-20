@@ -1,4 +1,5 @@
 import type { Review } from "@/lib/db/schema";
+import { distanceFromPerfect } from "@/lib/scoring";
 
 export type ShameCategory = {
   id: string;
@@ -21,14 +22,14 @@ export function computeHallOfShame(reviews: Review[]): ShameCategory[] {
   const worstAftertasteRaw = pickMin((r) => r.aftertaste);
   const worstAftertaste = worstAftertasteRaw && worstAftertasteRaw.aftertaste < 5 ? worstAftertasteRaw : null;
 
-  const saltOverloadRaw = pickMax((r) => r.saltBalance);
-  const saltOverload = saltOverloadRaw && saltOverloadRaw.saltBalance > 10 ? saltOverloadRaw : null;
+  const saltOverloadRaw = pickMax((r) => distanceFromPerfect(r.saltBalance));
+  const saltOverload = saltOverloadRaw && distanceFromPerfect(saltOverloadRaw.saltBalance) > 0 ? saltOverloadRaw : null;
 
-  const dustOverloadRaw = pickMax((r) => r.dustFactor);
-  const dustOverload = dustOverloadRaw && dustOverloadRaw.dustFactor > 10 ? dustOverloadRaw : null;
+  const dustOverloadRaw = pickMax((r) => distanceFromPerfect(r.dustFactor));
+  const dustOverload = dustOverloadRaw && distanceFromPerfect(dustOverloadRaw.dustFactor) > 0 ? dustOverloadRaw : null;
 
-  const crunchOverloadRaw = pickMax((r) => r.crunch);
-  const crunchOverload = crunchOverloadRaw && crunchOverloadRaw.crunch > 10 ? crunchOverloadRaw : null;
+  const crunchOverloadRaw = pickMax((r) => distanceFromPerfect(r.crunch));
+  const crunchOverload = crunchOverloadRaw && distanceFromPerfect(crunchOverloadRaw.crunch) > 0 ? crunchOverloadRaw : null;
 
   const mostDisappointingRaw = pickMax((r) => r.overall - r.weightedScore);
   const mostDisappointing =
@@ -57,26 +58,32 @@ export function computeHallOfShame(reviews: Review[]): ShameCategory[] {
     },
     {
       id: "salt",
-      title: "Salt Overload",
-      subtitle: "Sodium incident report",
+      title: "Salt Imbalance",
+      subtitle: "Farthest from ideal 10",
       review: saltOverload,
-      metric: saltOverload ? `${saltOverload.saltBalance.toFixed(1)}/13` : "-",
+      metric: saltOverload
+        ? `${distanceFromPerfect(saltOverload.saltBalance).toFixed(1)} gap`
+        : "-",
       icon: "salt",
     },
     {
       id: "crunch",
-      title: "Crunch Overload",
-      subtitle: "Jaw fatigue threshold breached",
+      title: "Crunch Imbalance",
+      subtitle: "Farthest from ideal 10",
       review: crunchOverload,
-      metric: crunchOverload ? `${crunchOverload.crunch.toFixed(1)}/13` : "-",
+      metric: crunchOverload
+        ? `${distanceFromPerfect(crunchOverload.crunch).toFixed(1)} gap`
+        : "-",
       icon: "crunch",
     },
     {
       id: "dust",
-      title: "Dust Overload",
-      subtitle: "Powder cloud incident",
+      title: "Dust Imbalance",
+      subtitle: "Farthest from ideal 10",
       review: dustOverload,
-      metric: dustOverload ? `${dustOverload.dustFactor.toFixed(1)}/13` : "-",
+      metric: dustOverload
+        ? `${distanceFromPerfect(dustOverload.dustFactor).toFixed(1)} gap`
+        : "-",
       icon: "dust",
     },
   ];

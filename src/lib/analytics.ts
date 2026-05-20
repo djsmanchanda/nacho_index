@@ -1,4 +1,5 @@
 import type { Review } from "@/lib/db/schema";
+import { distanceFromPerfect } from "@/lib/scoring";
 
 export type BrandAverage = { brand: string; average: number; count: number };
 
@@ -46,9 +47,9 @@ export function computeAnalytics(reviews: Review[]): AnalyticsSnapshot {
   const pickMax = (key: keyof Review) =>
     [...reviews].sort((a, b) => (b[key] as number) - (a[key] as number))[0] ?? null;
 
-  const pickClosestToIdeal = (key: keyof Review, ideal: number) =>
+  const pickClosestToIdeal = (key: keyof Review) =>
     [...reviews].sort(
-      (a, b) => Math.abs((a[key] as number) - ideal) - Math.abs((b[key] as number) - ideal),
+      (a, b) => distanceFromPerfect(a[key] as number) - distanceFromPerfect(b[key] as number),
     )[0] ?? null;
 
   const pickMinAftertaste = () =>
@@ -78,7 +79,7 @@ export function computeAnalytics(reviews: Review[]): AnalyticsSnapshot {
 
   return {
     brandAverages,
-    bestCrunch: pickClosestToIdeal("crunch", 10),
+    bestCrunch: pickClosestToIdeal("crunch"),
     mostRebuyable: pickMax("rebuyValue"),
     worstAftertaste: pickMinAftertaste(),
     topRated: pickMax("weightedScore"),

@@ -28,15 +28,19 @@ export function maxRatingFor(key: keyof RatingInput): number {
   return isOverloadRating(key) ? OVERLOAD_LIMIT : IDEAL_PEAK;
 }
 
+export function distanceFromPerfect(value: number): number {
+  const distance = Math.abs(value - IDEAL_PEAK);
+  return value > IDEAL_PEAK ? distance * 2 : distance;
+}
+
 export function peakAdjustedRating(value: number): number {
-  if (value <= IDEAL_PEAK) return value;
-  return Math.max(0, IDEAL_PEAK - (value - IDEAL_PEAK) * 2);
+  return Math.max(0, IDEAL_PEAK - distanceFromPerfect(value));
 }
 
 export function calculateWeightedScore(ratings: RatingInput): number {
   const crunchScore = peakAdjustedRating(ratings.crunch);
   const saltBalanceScore = peakAdjustedRating(ratings.saltBalance);
-  const dustOverloadPenalty = Math.max(0, ratings.dustFactor - IDEAL_PEAK) * 0.15;
+  const dustDistancePenalty = distanceFromPerfect(ratings.dustFactor) * 0.15;
   const score =
     ratings.overall * SCORE_WEIGHTS.overall +
     ratings.taste * SCORE_WEIGHTS.taste +
@@ -44,22 +48,19 @@ export function calculateWeightedScore(ratings: RatingInput): number {
     ratings.aftertaste * SCORE_WEIGHTS.aftertaste +
     ratings.rebuyValue * SCORE_WEIGHTS.rebuyValue +
     saltBalanceScore * SCORE_WEIGHTS.saltBalance -
-    dustOverloadPenalty;
+    dustDistancePenalty;
 
   return Math.max(0, Math.round(score * 100) / 100);
 }
 
 /** Crunch per unit of mess — higher dust lowers efficiency */
 export function crunchEfficiency(crunch: number, dustFactor: number): number {
-  const overloadPenalty = Math.max(0, crunch - IDEAL_PEAK) * 0.4;
-  return Math.round(((peakAdjustedRating(crunch) - overloadPenalty) / (1 + dustFactor * 0.35)) * 100) / 100;
+  return Math.round((peakAdjustedRating(crunch) / (1 + distanceFromPerfect(dustFactor) * 0.35)) * 100) / 100;
 }
 
 /** Finger-grease / powder tax */
 export function greasePenalty(dustFactor: number, aftertaste: number): number {
-  const dustScore = peakAdjustedRating(dustFactor);
-  const dustOverload = Math.max(0, dustFactor - IDEAL_PEAK);
-  return Math.round(((dustScore * 0.6 + dustOverload * 1.1) + (10 - aftertaste) * 0.15) * 100) / 100;
+  return Math.round((distanceFromPerfect(dustFactor) * 0.75 + (10 - aftertaste) * 0.15) * 100) / 100;
 }
 
 /** Composite purchase intent */
