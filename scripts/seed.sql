@@ -1,0 +1,2 @@
+-- Intentionally empty.
+-- Add reviews through the password-protected /add route instead of shipping defaults.
