@@ -19,11 +19,15 @@ Built for **Cloudflare Pages + D1** using **Next.js App Router**, **Drizzle ORM*
 weighted =
   overall × 0.25 +
   taste × 0.35 +
-  crunch × 0.15 +
+  adjusted_crunch × 0.15 +
   aftertaste × 0.10 +
   rebuy_value × 0.10 +
-  salt_balance × 0.05
+  adjusted_salt_balance × 0.05 -
+  dust_overload_penalty
 ```
+
+Crunch, salt balance, and dust factor can be rated from 0-13. A value of 10 is ideal;
+values above 10 are treated as overload and reduce the score.
 
 ## Tech stack
 

@@ -26,6 +26,7 @@ import type { ReviewEnergy } from "@/lib/review-energy";
 import type { Tier } from "@/lib/tiers";
 import type { ReviewFormValues } from "@/lib/validations";
 import { getPlaceholderImage } from "@/lib/image-fetch";
+import { maxRatingFor, isOverloadRating } from "@/lib/scoring";
 
 const defaultRatings = {
   overall: 7,
@@ -200,14 +201,17 @@ export function AddReviewForm({ review, mode = "create" }: Props) {
               <div key={key} className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label>{label}</Label>
-                  <span className="font-mono text-sm text-orange-300">{ratings[key].toFixed(1)}</span>
+                  <span className="font-mono text-sm text-orange-300">
+                    {ratings[key].toFixed(1)}
+                    {isOverloadRating(key) ? "/13" : "/10"}
+                  </span>
                 </div>
                 <Slider
                   aria-label={`${label} rating`}
                   value={[ratings[key]]}
                   onValueChange={(v) => updateRating(key, v)}
                   min={0}
-                  max={10}
+                  max={maxRatingFor(key)}
                   step={0.5}
                 />
               </div>

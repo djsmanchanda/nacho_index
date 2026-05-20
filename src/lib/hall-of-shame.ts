@@ -6,7 +6,7 @@ export type ShameCategory = {
   subtitle: string;
   review: Review | null;
   metric: string;
-  icon: "skull" | "salt" | "dust" | "disappoint";
+  icon: "skull" | "salt" | "dust" | "crunch" | "disappoint";
 };
 
 export function computeHallOfShame(reviews: Review[]): ShameCategory[] {
@@ -22,10 +22,13 @@ export function computeHallOfShame(reviews: Review[]): ShameCategory[] {
   const worstAftertaste = worstAftertasteRaw && worstAftertasteRaw.aftertaste < 5 ? worstAftertasteRaw : null;
 
   const saltOverloadRaw = pickMax((r) => r.saltBalance);
-  const saltOverload = saltOverloadRaw && saltOverloadRaw.saltBalance >= 8 ? saltOverloadRaw : null;
+  const saltOverload = saltOverloadRaw && saltOverloadRaw.saltBalance > 10 ? saltOverloadRaw : null;
 
   const dustOverloadRaw = pickMax((r) => r.dustFactor);
-  const dustOverload = dustOverloadRaw && dustOverloadRaw.dustFactor >= 8 ? dustOverloadRaw : null;
+  const dustOverload = dustOverloadRaw && dustOverloadRaw.dustFactor > 10 ? dustOverloadRaw : null;
+
+  const crunchOverloadRaw = pickMax((r) => r.crunch);
+  const crunchOverload = crunchOverloadRaw && crunchOverloadRaw.crunch > 10 ? crunchOverloadRaw : null;
 
   const mostDisappointingRaw = pickMax((r) => r.overall - r.weightedScore);
   const mostDisappointing =
@@ -57,15 +60,23 @@ export function computeHallOfShame(reviews: Review[]): ShameCategory[] {
       title: "Salt Overload",
       subtitle: "Sodium incident report",
       review: saltOverload,
-      metric: saltOverload ? `${saltOverload.saltBalance.toFixed(1)}/10` : "-",
+      metric: saltOverload ? `${saltOverload.saltBalance.toFixed(1)}/13` : "-",
       icon: "salt",
+    },
+    {
+      id: "crunch",
+      title: "Crunch Overload",
+      subtitle: "Jaw fatigue threshold breached",
+      review: crunchOverload,
+      metric: crunchOverload ? `${crunchOverload.crunch.toFixed(1)}/13` : "-",
+      icon: "crunch",
     },
     {
       id: "dust",
       title: "Dust Overload",
       subtitle: "Powder cloud incident",
       review: dustOverload,
-      metric: dustOverload ? `${dustOverload.dustFactor.toFixed(1)}/10` : "-",
+      metric: dustOverload ? `${dustOverload.dustFactor.toFixed(1)}/13` : "-",
       icon: "dust",
     },
   ];

@@ -46,6 +46,11 @@ export function computeAnalytics(reviews: Review[]): AnalyticsSnapshot {
   const pickMax = (key: keyof Review) =>
     [...reviews].sort((a, b) => (b[key] as number) - (a[key] as number))[0] ?? null;
 
+  const pickClosestToIdeal = (key: keyof Review, ideal: number) =>
+    [...reviews].sort(
+      (a, b) => Math.abs((a[key] as number) - ideal) - Math.abs((b[key] as number) - ideal),
+    )[0] ?? null;
+
   const pickMinAftertaste = () =>
     [...reviews].sort((a, b) => a.aftertaste - b.aftertaste)[0] ?? null;
 
@@ -73,7 +78,7 @@ export function computeAnalytics(reviews: Review[]): AnalyticsSnapshot {
 
   return {
     brandAverages,
-    bestCrunch: pickMax("crunch"),
+    bestCrunch: pickClosestToIdeal("crunch", 10),
     mostRebuyable: pickMax("rebuyValue"),
     worstAftertaste: pickMinAftertaste(),
     topRated: pickMax("weightedScore"),

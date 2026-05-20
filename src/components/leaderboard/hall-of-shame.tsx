@@ -11,6 +11,7 @@ const ICONS = {
   skull: Skull,
   salt: Zap,
   dust: AlertTriangle,
+  crunch: AlertTriangle,
   disappoint: Frown,
 };
 

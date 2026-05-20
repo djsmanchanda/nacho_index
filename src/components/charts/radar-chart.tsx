@@ -1,9 +1,10 @@
 "use client";
 
-import { ratingCategories, type RatingInput } from "@/lib/scoring";
+import { maxRatingFor, ratingCategories, type RatingInput } from "@/lib/scoring";
 
 export function RatingRadarChart({ ratings }: { ratings: RatingInput }) {
   const data = ratingCategories(ratings).map((c) => ({
+    key: c.key as keyof RatingInput,
     category: c.label,
     score: c.value,
   }));
@@ -11,7 +12,7 @@ export function RatingRadarChart({ ratings }: { ratings: RatingInput }) {
   const maxRadius = 112;
   const points = data.map((item, index) => {
     const angle = (Math.PI * 2 * index) / data.length - Math.PI / 2;
-    const radius = (item.score / 10) * maxRadius;
+    const radius = (item.score / maxRatingFor(item.key)) * maxRadius;
     return {
       ...item,
       x: center + Math.cos(angle) * radius,

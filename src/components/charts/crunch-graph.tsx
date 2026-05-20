@@ -24,7 +24,7 @@ function toPoints(reviews: Review[]): Point[] {
 }
 
 function xFor(value: number) {
-  return 48 + (value / 10) * 304;
+  return 48 + (value / 13) * 304;
 }
 
 function yFor(value: number) {
@@ -58,32 +58,39 @@ export function CrunchGraph({ reviews }: { reviews: Review[] }) {
             </linearGradient>
           </defs>
           <rect width="400" height="360" fill="url(#nacho-plot-bg)" />
-          {[0, 2.5, 5, 7.5, 10].map((tick) => {
+          {[0, 2.5, 5, 7.5, 10, 13].map((tick) => {
             const x = xFor(tick);
-            const y = yFor(tick);
             return (
               <g key={tick}>
                 <line x1={x} x2={x} y1="48" y2="316" stroke="rgba(255,255,255,0.07)" />
-                <line x1="48" x2="352" y1={y} y2={y} stroke="rgba(255,255,255,0.07)" />
                 <text x={x} y="338" textAnchor="middle" className="fill-zinc-500 text-[10px]">
                   {tick}
                 </text>
+              </g>
+            );
+          })}
+          {[0, 2.5, 5, 7.5, 10].map((tick) => {
+            const y = yFor(tick);
+            return (
+              <g key={tick}>
+                <line x1="48" x2="352" y1={y} y2={y} stroke="rgba(255,255,255,0.07)" />
                 <text x="30" y={y + 3} textAnchor="middle" className="fill-zinc-500 text-[10px]">
                   {tick}
                 </text>
               </g>
             );
           })}
-          <line x1={xFor(7.5)} x2={xFor(7.5)} y1="48" y2="316" stroke="rgba(249,115,22,0.35)" strokeDasharray="5 5" />
+          <line x1={xFor(10)} x2={xFor(10)} y1="48" y2="316" stroke="rgba(34,197,94,0.35)" strokeDasharray="5 5" />
+          <line x1={xFor(7.5)} x2={xFor(7.5)} y1="48" y2="316" stroke="rgba(249,115,22,0.25)" strokeDasharray="5 5" />
           <line x1="48" x2="352" y1={yFor(7.5)} y2={yFor(7.5)} stroke="rgba(249,115,22,0.35)" strokeDasharray="5 5" />
           <text x="200" y="26" textAnchor="middle" className="fill-zinc-300 text-[11px] uppercase tracking-widest">
             Taste intensity
           </text>
           <text x="200" y="354" textAnchor="middle" className="fill-zinc-300 text-[11px] uppercase tracking-widest">
-            Crunch ratio
+            Crunch ratio (10 ideal, 13 overloaded)
           </text>
           <text x="278" y="70" className="fill-orange-300 text-[9px] uppercase tracking-widest">
-            Elite quadrant
+            Elite zone
           </text>
           {data.map((point) => {
             const x = xFor(point.crunch);

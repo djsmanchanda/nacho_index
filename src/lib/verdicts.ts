@@ -8,12 +8,16 @@ type VerdictRule = {
 
 const VERDICT_RULES: VerdictRule[] = [
   {
-    test: (r) => r.crunch > 9 && r.taste > 8,
+    test: (r) => r.crunch > 9 && r.crunch <= 10 && r.taste > 8,
     line: "Structurally elite",
   },
   {
-    test: (r) => r.crunch >= 8.5,
+    test: (r) => r.crunch >= 8.5 && r.crunch <= 10,
     line: "Scientifically crunchy",
+  },
+  {
+    test: (r) => r.crunch > 10,
+    line: "Over-crunched into jaw fatigue",
   },
   {
     test: (r) => r.aftertaste < 4,
@@ -28,19 +32,27 @@ const VERDICT_RULES: VerdictRule[] = [
     line: "Rebuy impulse: activated",
   },
   {
-    test: (r) => r.saltBalance >= 8.5,
+    test: (r) => r.saltBalance >= 8.5 && r.saltBalance <= 10,
     line: "Salt attack",
+  },
+  {
+    test: (r) => r.saltBalance > 10,
+    line: "Salt overload",
   },
   {
     test: (r) => r.saltBalance <= 3,
     line: "Low-salt tragedy",
   },
   {
-    test: (r) => r.dustFactor >= 8,
+    test: (r) => r.dustFactor >= 8 && r.dustFactor <= 10,
     line: "Dust cloud deployment successful",
   },
   {
-    test: (r) => r.crunch >= 9 && r.dustFactor <= 4,
+    test: (r) => r.dustFactor > 10,
+    line: "Too dusty for safe handling",
+  },
+  {
+    test: (r) => r.crunch >= 9 && r.crunch <= 10 && r.dustFactor <= 4,
     line: "Crunch-to-noise ratio: illegal",
   },
   {
@@ -122,14 +134,17 @@ export function generateVerdict(ratings: RatingInput, weighted: number): string 
 export function generateTags(ratings: RatingInput): string[] {
   const tags: string[] = [];
 
-  if (ratings.crunch >= 8) tags.push("high-crunch");
-  if (ratings.dustFactor >= 7) tags.push("dusty");
+  if (ratings.crunch > 10) tags.push("over-crunch");
+  else if (ratings.crunch >= 8) tags.push("high-crunch");
+  if (ratings.dustFactor > 10) tags.push("dust-overload");
+  else if (ratings.dustFactor >= 7) tags.push("dusty");
   if (ratings.rebuyValue >= 8) tags.push("rebuy");
-  if (ratings.saltBalance >= 8) tags.push("salty");
+  if (ratings.saltBalance > 10) tags.push("salt-overload");
+  else if (ratings.saltBalance >= 8) tags.push("salty");
   if (ratings.aftertaste <= 4) tags.push("rough-finish");
   if (ratings.taste >= 8.5) tags.push("flavor-king");
   if (ratings.overall >= 9) tags.push("elite");
-  if (ratings.crunch >= 8 && ratings.taste < 6.5) tags.push("crunch-trap");
+  if (ratings.crunch >= 8 && ratings.crunch <= 10 && ratings.taste < 6.5) tags.push("crunch-trap");
   if (ratings.taste >= 8 && ratings.crunch < 6.5) tags.push("flavor-bomb");
 
   return tags.slice(0, 5);
@@ -146,7 +161,9 @@ export function generateVerdictNarrative(
   const energy = getReviewEnergy(ratings, comment);
 
   const crunchNote =
-    ratings.crunch >= 8
+    ratings.crunch > 10
+      ? "Crunch has crossed from satisfying into structural overkill."
+      : ratings.crunch >= 8
       ? "The crunch profile registers as structurally dominant."
       : "Crunch metrics sit in a moderate band - acceptable but not legendary.";
   const tasteNote =
