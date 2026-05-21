@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, Lightbulb, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { NachoIcon } from "@/components/ui/nacho-icon";
 
 const links = [
   { href: "/", label: "Leaderboard", icon: Trophy },
@@ -19,8 +19,15 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
         <Link href="/" className="group flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-400 to-red-500 shadow-lg shadow-orange-500/30 group-hover:scale-105 transition">
-            <NachoIcon className="h-5.5 w-5.5 text-black fill-black" />
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-500/5 shadow-lg shadow-orange-500/20 transition group-hover:scale-105 group-hover:border-orange-300/35">
+            <Image
+              src="/nacho-icon.png"
+              alt="Nacho Index logo"
+              fill
+              className="object-contain"
+              sizes="44px"
+              priority
+            />
           </div>
           <div>
             <div className="flex items-center gap-2">

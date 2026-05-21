@@ -1,107 +1,89 @@
-"""
-Convert the generated nacho icon PNG to a proper multi-resolution favicon.ico.
-Uses struct to manually build the ICO file format since Pillow's ICO save
-only stores a single resolution.
-"""
+"""Generate transparent PNG and ICO app icons from public/nacho-icon.png."""
+
 import io
-import os
 import struct
+from pathlib import Path
+
 from PIL import Image
 
 
-def build_ico(images):
-    """
-    Build an ICO file from a list of PIL Image objects.
-    Each image is stored as a PNG inside the ICO container.
-    """
-    num = len(images)
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "public" / "nacho-icon.png"
 
-    # ICO header: 3 x uint16 (reserved=0, type=1 for ICO, count)
-    header = struct.pack("<HHH", 0, 1, num)
 
-    # Each directory entry is 16 bytes
-    # After header + all directory entries, the image data begins
-    data_offset = 6 + 16 * num
+def make_edge_white_transparent(img: Image.Image, threshold: int = 238) -> Image.Image:
+    img = img.convert("RGBA")
+    width, height = img.size
+    pixels = img.load()
+    seen: set[tuple[int, int]] = set()
+    stack: list[tuple[int, int]] = []
 
-    entries = []
-    png_datas = []
+    for x in range(width):
+        stack.extend([(x, 0), (x, height - 1)])
+    for y in range(height):
+        stack.extend([(0, y), (width - 1, y)])
+
+    while stack:
+        x, y = stack.pop()
+        if (x, y) in seen or x < 0 or y < 0 or x >= width or y >= height:
+            continue
+        seen.add((x, y))
+
+        red, green, blue, alpha = pixels[x, y]
+        if not (alpha > 0 and red >= threshold and green >= threshold and blue >= threshold):
+            continue
+
+        pixels[x, y] = (255, 255, 255, 0)
+        stack.extend([(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)])
+
+    return img
+
+
+def build_ico(images: list[Image.Image]) -> bytes:
+    header = struct.pack("<HHH", 0, 1, len(images))
+    data_offset = 6 + 16 * len(images)
+    entries: list[bytes] = []
+    png_datas: list[bytes] = []
 
     for img in images:
-        w, h = img.size
-        # Save image as PNG to bytes
-        buf = io.BytesIO()
-        img.save(buf, format="PNG")
-        png_bytes = buf.getvalue()
-
-        # Width and height: 0 means 256
-        bw = w if w < 256 else 0
-        bh = h if h < 256 else 0
-
-        entry = struct.pack(
-            "<BBBBHHII",
-            bw,           # width
-            bh,           # height
-            0,            # color palette count
-            0,            # reserved
-            1,            # color planes
-            32,           # bits per pixel
-            len(png_bytes),  # size of PNG data
-            data_offset,  # offset to PNG data
+        buffer = io.BytesIO()
+        img.save(buffer, format="PNG")
+        png_bytes = buffer.getvalue()
+        width, height = img.size
+        entries.append(
+            struct.pack(
+                "<BBBBHHII",
+                width if width < 256 else 0,
+                height if height < 256 else 0,
+                0,
+                0,
+                1,
+                32,
+                len(png_bytes),
+                data_offset,
+            )
         )
-        entries.append(entry)
         png_datas.append(png_bytes)
         data_offset += len(png_bytes)
 
-    # Assemble the file
-    ico = header
-    for e in entries:
-        ico += e
-    for d in png_datas:
-        ico += d
-
-    return ico
+    return header + b"".join(entries) + b"".join(png_datas)
 
 
-def main():
-    source = os.path.join(
-        os.path.expanduser("~"),
-        ".gemini", "antigravity", "brain",
-        "9e0994f7-6abd-415f-b836-54f23ed629ce",
-        "nacho_icon_big_1779315432250.png",
-    )
+def resized_icon(source: Image.Image, size: int) -> Image.Image:
+    resized = source.resize((size, size), Image.Resampling.LANCZOS)
+    return make_edge_white_transparent(resized)
 
-    print(f"Loading source: {source}")
-    img = Image.open(source).convert("RGBA")
-    print(f"Source size: {img.size}")
 
-    # Generate favicon sizes
-    sizes = [16, 32, 48, 64, 128, 256]
-    resized = []
-    for sz in sizes:
-        r = img.resize((sz, sz), Image.Resampling.LANCZOS)
-        resized.append(r)
-        print(f"  Resized to {sz}x{sz}")
+def main() -> None:
+    source = make_edge_white_transparent(Image.open(SOURCE))
 
-    # Build proper multi-resolution ICO
-    ico_bytes = build_ico(resized)
-    target_ico = os.path.join("src", "app", "favicon.ico")
-    with open(target_ico, "wb") as f:
-        f.write(ico_bytes)
-    print(f"\nSaved favicon.ico: {len(ico_bytes):,} bytes ({len(sizes)} sizes)")
+    source.save(ROOT / "public" / "nacho-icon.png", format="PNG")
+    source.save(ROOT / "src" / "app" / "icon.png", format="PNG")
+    resized_icon(source, 180).save(ROOT / "src" / "app" / "apple-icon.png", format="PNG")
 
-    # Save as 512x512 PNG for Next.js icon metadata
-    target_png = os.path.join("src", "app", "icon.png")
-    icon_512 = img.resize((512, 512), Image.Resampling.LANCZOS)
-    icon_512.save(target_png, format="PNG")
-    print(f"Saved icon.png: {os.path.getsize(target_png):,} bytes")
-
-    # 180x180 apple-touch-icon
-    target_apple = os.path.join("src", "app", "apple-icon.png")
-    apple = img.resize((180, 180), Image.Resampling.LANCZOS)
-    apple.save(target_apple, format="PNG")
-    print(f"Saved apple-icon.png: {os.path.getsize(target_apple):,} bytes")
-
-    print("\nDone!")
+    ico_sizes = [16, 32, 48, 64, 128, 256]
+    ico_images = [resized_icon(source, size) for size in ico_sizes]
+    (ROOT / "src" / "app" / "favicon.ico").write_bytes(build_ico(ico_images))
 
 
 if __name__ == "__main__":
