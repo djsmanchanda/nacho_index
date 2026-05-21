@@ -30,5 +30,15 @@ export const imageCache = sqliteTable("image_cache", {
   createdAt: text("created_at").notNull(),
 });
 
+export const recommendations = sqliteTable("recommendations", {
+  id: text("id").primaryKey(),
+  brand: text("brand").notNull(),
+  flavor: text("flavor").notNull(),
+  countryOfOrigin: text("country_of_origin").notNull(),
+  createdAt: text("created_at").notNull(),
+});
+
 export type Review = typeof reviews.$inferSelect;
 export type NewReview = typeof reviews.$inferInsert;
+export type Recommendation = typeof recommendations.$inferSelect;
+export type NewRecommendation = typeof recommendations.$inferInsert;

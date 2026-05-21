@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, FlaskConical, Trophy } from "lucide-react";
+import { BarChart3, Lightbulb, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NachoIcon } from "@/components/ui/nacho-icon";
 
 const links = [
   { href: "/", label: "Leaderboard", icon: Trophy },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/recommendations", label: "Recommendations", icon: Lightbulb },
 ];
 
 export function SiteHeader() {
@@ -18,7 +20,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
         <Link href="/" className="group flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-400 to-red-500 shadow-lg shadow-orange-500/30 group-hover:scale-105 transition">
-            <FlaskConical className="h-5 w-5 text-black" />
+            <NachoIcon className="h-5.5 w-5.5 text-black fill-black" />
           </div>
           <div>
             <div className="flex items-center gap-2">

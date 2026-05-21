@@ -53,7 +53,7 @@ export function CrunchGraph({ reviews }: { reviews: Review[] }) {
         >
           <defs>
             <linearGradient id="nacho-plot-bg" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stopColor="rgba(249,115,22,0.08)" />
+              <stop offset="0%" stopColor="rgba(251,191,36,0.08)" />
               <stop offset="100%" stopColor="rgba(239,68,68,0.03)" />
             </linearGradient>
           </defs>
@@ -81,15 +81,15 @@ export function CrunchGraph({ reviews }: { reviews: Review[] }) {
             );
           })}
           <line x1={xFor(10)} x2={xFor(10)} y1="48" y2="316" stroke="rgba(34,197,94,0.35)" strokeDasharray="5 5" />
-          <line x1={xFor(7.5)} x2={xFor(7.5)} y1="48" y2="316" stroke="rgba(249,115,22,0.25)" strokeDasharray="5 5" />
-          <line x1="48" x2="352" y1={yFor(7.5)} y2={yFor(7.5)} stroke="rgba(249,115,22,0.35)" strokeDasharray="5 5" />
+          <line x1={xFor(7.5)} x2={xFor(7.5)} y1="48" y2="316" stroke="rgba(251,191,36,0.25)" strokeDasharray="5 5" />
+          <line x1="48" x2="352" y1={yFor(7.5)} y2={yFor(7.5)} stroke="rgba(251,191,36,0.35)" strokeDasharray="5 5" />
           <text x="200" y="26" textAnchor="middle" className="fill-zinc-300 text-[11px] uppercase tracking-widest">
             Taste intensity
           </text>
           <text x="200" y="354" textAnchor="middle" className="fill-zinc-300 text-[11px] uppercase tracking-widest">
             Crunch ratio (10 ideal, 13 overloaded)
           </text>
-          <text x="278" y="70" className="fill-orange-300 text-[9px] uppercase tracking-widest">
+          <text x="278" y="70" className="fill-amber-300 text-[9px] uppercase tracking-widest">
             Elite zone
           </text>
           {data.map((point) => {
@@ -98,8 +98,8 @@ export function CrunchGraph({ reviews }: { reviews: Review[] }) {
             const radius = 5 + point.weightedScore / 2.5;
             return (
               <a key={point.id} href={`/review/${point.id}`} aria-label={`${point.brand} ${point.flavor}`}>
-                <circle cx={x} cy={y} r={radius + 5} fill="rgba(249,115,22,0.12)" />
-                <circle cx={x} cy={y} r={radius} fill="#f97316" stroke="#fbbf24" strokeWidth="1.5" />
+                <circle cx={x} cy={y} r={radius + 5} fill="rgba(251,191,36,0.12)" />
+                <circle cx={x} cy={y} r={radius} fill="#f59e0b" stroke="#fbbf24" strokeWidth="1.5" />
                 <text x={x} y={y - radius - 8} textAnchor="middle" className="fill-zinc-100 text-[10px] font-semibold">
                   {point.brand}
                 </text>
@@ -118,7 +118,7 @@ export function CrunchGraph({ reviews }: { reviews: Review[] }) {
           <Link
             key={point.id}
             href={`/review/${point.id}`}
-            className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs transition hover:border-orange-500/30 hover:bg-orange-500/5"
+            className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs transition hover:border-amber-500/30 hover:bg-amber-500/5"
           >
             <span className="block font-semibold text-zinc-100">{point.brand}</span>
             <span className="text-zinc-500">

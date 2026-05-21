@@ -14,7 +14,7 @@ export default async function AddReviewPage({
   return (
     <div>
       <section className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-orange-400/90">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400/90">
           New specimen
         </p>
         <h2 className="mt-2 text-3xl font-bold text-zinc-50">Log a review</h2>

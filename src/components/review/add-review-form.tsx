@@ -201,7 +201,7 @@ export function AddReviewForm({ review, mode = "create" }: Props) {
               <div key={key} className="space-y-3">
                 <div className="flex items-center justify-between">
                   <Label>{label}</Label>
-                  <span className="font-mono text-sm text-orange-300">
+                  <span className="font-mono text-sm text-amber-300">
                     {ratings[key].toFixed(1)}
                     {isOverloadRating(key) ? "/13" : "/10"}
                   </span>
@@ -238,7 +238,7 @@ export function AddReviewForm({ review, mode = "create" }: Props) {
         <Card className="overflow-hidden">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-orange-400" />
+              <Sparkles className="h-4 w-4 text-amber-400" />
               Live preview
             </CardTitle>
           </CardHeader>
@@ -246,7 +246,7 @@ export function AddReviewForm({ review, mode = "create" }: Props) {
             <div className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/40">
               {imageLoading && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
-                  <Loader2 className="h-8 w-8 animate-spin text-orange-400" />
+                  <Loader2 className="h-8 w-8 animate-spin text-amber-400" />
                 </div>
               )}
               <Image
@@ -281,7 +281,7 @@ export function AddReviewForm({ review, mode = "create" }: Props) {
               </Button>
             </div>
             {preview && (
-              <div className="space-y-3 rounded-xl border border-orange-500/20 bg-orange-500/5 p-4">
+              <div className="space-y-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
                 <TierBadge score={preview.weightedScore} size="md" className="items-start" />
                 <EnergyBadge ratings={ratings} comment={comment} energy={preview.energy} />
                 <p className="text-sm leading-relaxed text-amber-200">{preview.verdict}</p>

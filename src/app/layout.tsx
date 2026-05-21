@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Divjot's Nacho Index",
+  title: "Nacho Index",
   description:
     "A highly stylized personal leaderboard for reviewing nachos, chips, and snacks with detailed analytics.",
 };

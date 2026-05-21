@@ -24,17 +24,17 @@ export function LeaderboardCard({ review, rank }: { review: Review; rank: number
 
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-xl transition-all duration-300 hover:border-orange-500/25 hover:bg-white/[0.05] hover:shadow-[0_0_20px_rgba(249,115,22,0.03)]"
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-xl transition-all duration-300 hover:border-amber-500/25 hover:bg-white/[0.05] hover:shadow-[0_0_20px_rgba(251,191,36,0.03)]"
     >
       {/* Background cyber grid overlay */}
       <div className="absolute inset-0 cyber-grid opacity-[0.03] pointer-events-none" />
       
       <Link href={`/review/${review.id}`} className="flex gap-4 relative">
         <div className="flex w-12 shrink-0 flex-col items-center justify-center border-r border-white/5 pr-4">
-          <span className="font-mono text-2xl font-bold tracking-tighter text-zinc-600 transition-all duration-300 group-hover:text-orange-400 group-hover:text-glow-orange">
+          <span className="font-mono text-2xl font-bold tracking-tighter text-zinc-600 transition-all duration-300 group-hover:text-amber-400 group-hover:text-glow-amber">
             {String(rank).padStart(2, "0")}
           </span>
-          <span className="text-[7px] font-mono text-zinc-600 uppercase tracking-widest mt-1 scale-90 group-hover:text-orange-500/50">
+          <span className="text-[7px] font-mono text-zinc-600 uppercase tracking-widest mt-1 scale-90 group-hover:text-amber-500/50">
             SPEC_ID
           </span>
         </div>
@@ -47,12 +47,12 @@ export function LeaderboardCard({ review, rank }: { review: Review; rank: number
             sizes="80px"
           />
           {/* Active diagnostic scanner-beam */}
-          <div className="absolute inset-x-0 h-1/2 bg-gradient-to-b from-transparent via-orange-500/20 to-transparent scanner-beam opacity-30 group-hover:opacity-100 group-hover:via-orange-500/40 transition-all duration-300 pointer-events-none" />
+          <div className="absolute inset-x-0 h-1/2 bg-gradient-to-b from-transparent via-amber-500/20 to-transparent scanner-beam opacity-30 group-hover:opacity-100 group-hover:via-amber-500/40 transition-all duration-300 pointer-events-none" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
-              <h3 className="font-semibold text-zinc-50 group-hover:text-orange-300 transition duration-200">{review.brand}</h3>
+              <h3 className="font-semibold text-zinc-50 group-hover:text-amber-300 transition duration-200">{review.brand}</h3>
               <p className="text-sm text-zinc-400">{review.flavor}</p>
             </div>
             <TierBadge score={review.weightedScore} size="sm" />

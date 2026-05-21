@@ -9,9 +9,9 @@ export function CrunchGraphSection({ reviews }: { reviews: Review[] }) {
 
   return (
     <section className="mb-12">
-      <Card className="border-orange-500/20 bg-gradient-to-br from-orange-950/20 to-transparent">
+      <Card className="border-amber-500/20 bg-gradient-to-br from-amber-950/20 to-transparent">
         <CardHeader>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-400/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400/80">
             Snack science
           </p>
           <CardTitle>Crunch vs Taste</CardTitle>

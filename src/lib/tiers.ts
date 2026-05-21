@@ -28,8 +28,8 @@ export const TIERS: Tier[] = [
     label: "Dangerous",
     minScore: 8.5,
     description: "8.5+ — financially irresponsible",
-    className: "border-orange-500/50 bg-orange-500/15 text-orange-200",
-    glowClassName: "shadow-orange-500/40",
+    className: "border-amber-500/50 bg-amber-500/15 text-amber-200",
+    glowClassName: "shadow-amber-500/40",
   },
   {
     id: "certified",

@@ -38,7 +38,7 @@ export function RatingRadarChart({ ratings }: { ratings: RatingInput }) {
             cy={center}
             r={maxRadius * scale}
             fill="none"
-            stroke="rgba(249,115,22,0.14)"
+            stroke="rgba(251,191,36,0.14)"
           />
         ))}
         {points.map((p) => (
@@ -48,13 +48,13 @@ export function RatingRadarChart({ ratings }: { ratings: RatingInput }) {
             y1={center}
             x2={p.labelX}
             y2={p.labelY}
-            stroke="rgba(249,115,22,0.1)"
+            stroke="rgba(251,191,36,0.1)"
           />
         ))}
-        <polygon points={polygon} fill="rgba(249,115,22,0.28)" stroke="#f97316" strokeWidth="2" />
+        <polygon points={polygon} fill="rgba(251,191,36,0.28)" stroke="#f59e0b" strokeWidth="2" />
         {points.map((p) => (
           <g key={p.category}>
-            <circle cx={p.x} cy={p.y} r="3.5" fill="#fbbf24" stroke="#f97316" />
+            <circle cx={p.x} cy={p.y} r="3.5" fill="#fbbf24" stroke="#f59e0b" />
             <text
               x={p.labelX}
               y={p.labelY}

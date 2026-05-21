@@ -23,7 +23,7 @@ export function TierBadge({ score, size = "md", showScore = true, className }: P
       {showScore && (
         <span
           className={cn(
-            "font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-amber-200",
+            "font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-200",
             s.score,
           )}
         >

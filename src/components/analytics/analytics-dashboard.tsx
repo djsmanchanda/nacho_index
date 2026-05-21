@@ -19,7 +19,7 @@ import { CrunchGraph } from "@/components/charts/crunch-graph";
 import { HallOfShame } from "@/components/leaderboard/hall-of-shame";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const COLORS = ["#fb923c", "#fbbf24", "#f87171", "#a78bfa", "#34d399"];
+const COLORS = ["#fbbf24", "#fbbf24", "#f87171", "#a78bfa", "#34d399"];
 
 export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
   const data = computeAnalytics(reviews);
@@ -61,7 +61,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
             onClick={() => setActiveTab(tab.id as "overview" | "brands")}
             className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
               activeTab === tab.id
-                ? "bg-orange-500 text-zinc-950"
+                ? "bg-amber-500 text-zinc-950"
                 : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
             }`}
           >
@@ -73,7 +73,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
       {activeTab === "overview" ? (
         <>
           <HallOfShame reviews={reviews} />
-          <Card className="border-orange-500/20">
+          <Card className="border-amber-500/20">
             <CardHeader>
               <CardTitle>Crunch vs taste</CardTitle>
               <p className="text-sm text-zinc-500">The scientific identity of your snack corpus</p>
@@ -90,7 +90,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
             </Card>
             <Card className="p-5">
               <p className="text-xs uppercase tracking-wider text-zinc-500">Global average</p>
-              <p className="mt-1 text-3xl font-bold text-orange-300">
+              <p className="mt-1 text-3xl font-bold text-amber-300">
                 {data.globalAverage.toFixed(2)}
               </p>
             </Card>
@@ -118,7 +118,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
                         borderRadius: 12,
                       }}
                     />
-                    <Bar dataKey="average" fill="#f97316" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="average" fill="#f59e0b" radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -168,7 +168,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
                   <p className="mt-2 font-semibold text-zinc-100">
                     {item.brand} - {item.flavor}
                   </p>
-                  <p className="mt-1 text-2xl font-bold text-orange-300">
+                  <p className="mt-1 text-2xl font-bold text-amber-300">
                     {metric(item).toFixed(1)}
                   </p>
                 </Card>
@@ -188,7 +188,7 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
                 key={brand.brand}
                 className="grid gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:grid-cols-[48px_1fr_92px]"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-orange-500/30 bg-orange-500/10 font-mono text-sm font-bold text-orange-200">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/10 font-mono text-sm font-bold text-amber-200">
                   #{index + 1}
                 </div>
                 <div className="min-w-0">
@@ -198,13 +198,13 @@ export function AnalyticsDashboard({ reviews }: { reviews: Review[] }) {
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
                     <div
-                      className="h-full rounded-full bg-orange-400"
+                      className="h-full rounded-full bg-amber-400"
                       style={{ width: `${Math.min(100, Math.max(0, brand.average * 10))}%` }}
                     />
                   </div>
                 </div>
                 <div className="text-left sm:text-right">
-                  <p className="text-2xl font-bold text-orange-300">{brand.average.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-amber-300">{brand.average.toFixed(2)}</p>
                   <p className="text-[10px] uppercase tracking-wider text-zinc-500">average</p>
                 </div>
               </div>

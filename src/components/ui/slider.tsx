@@ -29,11 +29,11 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         value={current}
         onChange={(event) => onValueChange?.([event.currentTarget.valueAsNumber])}
         className={cn(
-          "nacho-range h-5 w-full cursor-pointer appearance-none rounded-full accent-orange-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70",
+          "nacho-range h-5 w-full cursor-pointer appearance-none rounded-full accent-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70",
           className,
         )}
         style={{
-          background: `linear-gradient(to right, #f97316 0%, #fbbf24 ${percent}%, rgba(255,255,255,0.1) ${percent}%, rgba(255,255,255,0.1) 100%)`,
+          background: `linear-gradient(to right, #f59e0b 0%, #fbbf24 ${percent}%, rgba(255,255,255,0.1) ${percent}%, rgba(255,255,255,0.1) 100%)`,
         }}
         {...props}
       />

@@ -2,6 +2,7 @@ const links = [
   { href: "https://github.com/djsmanchanda", label: "GitHub" },
   { href: "https://www.linkedin.com/in/djsmanchanda", label: "LinkedIn" },
   { href: "https://djsmanchanda.com", label: "djsmanchanda.com" },
+  { href: "https://buymeacoffee.com/djsmanchanda", label: "Buy me some Nachos" },
 ];
 
 export function ProfileLinks() {

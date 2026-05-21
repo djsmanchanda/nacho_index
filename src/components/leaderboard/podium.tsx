@@ -15,7 +15,7 @@ const podiumOrder = [1, 0, 2] as const;
 const rankStyles = [
   { ring: "ring-amber-400/60", glow: "shadow-amber-500/30", height: "md:-mt-6 md:scale-110" },
   { ring: "ring-zinc-400/40", glow: "shadow-zinc-500/20", height: "" },
-  { ring: "ring-orange-700/40", glow: "shadow-orange-900/30", height: "md:mt-2" },
+  { ring: "ring-amber-700/40", glow: "shadow-amber-900/30", height: "md:mt-2" },
 ];
 
 export function Podium({ topThree }: { topThree: Review[] }) {
@@ -52,9 +52,9 @@ export function Podium({ topThree }: { topThree: Review[] }) {
             <div
               key={review.id}
               className={cn(
-                "relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition hover:border-orange-500/30 hover:bg-white/[0.06]",
+                "relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition hover:border-amber-500/30 hover:bg-white/[0.06]",
                 style.height,
-                isFirst && "z-10 border-orange-400/25 shadow-[0_0_25px_rgba(249,115,22,0.08)]",
+                isFirst && "z-10 border-amber-400/25 shadow-[0_0_25px_rgba(251,191,36,0.08)]",
               )}
             >
               {/* Stationary cyber grid & ambient lighting */}
@@ -62,7 +62,7 @@ export function Podium({ topThree }: { topThree: Review[] }) {
                 className={cn(
                   "absolute inset-0 opacity-40 pointer-events-none",
                   isFirst
-                    ? "bg-gradient-to-b from-amber-500/15 via-orange-500/5 to-transparent"
+                    ? "bg-gradient-to-b from-amber-500/15 via-amber-500/5 to-transparent"
                     : "bg-gradient-to-b from-white/5 to-transparent",
                 )}
               />
@@ -111,7 +111,7 @@ export function Podium({ topThree }: { topThree: Review[] }) {
                         sizes={isFirst ? "128px" : "96px"}
                       />
                       {/* Sci-fi scanner laser overlay */}
-                      <div className="absolute inset-x-0 h-1/2 bg-gradient-to-b from-transparent via-orange-500/35 to-transparent scanner-beam pointer-events-none" />
+                      <div className="absolute inset-x-0 h-1/2 bg-gradient-to-b from-transparent via-amber-500/35 to-transparent scanner-beam pointer-events-none" />
                       
                       <div
                         className={cn(

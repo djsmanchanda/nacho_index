@@ -55,7 +55,7 @@ export function ReviewDetail({ review, allReviews }: { review: Review; allReview
     <div className="space-y-8">
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-orange-300"
+        className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-amber-300"
       >
         <ArrowLeft className="h-4 w-4" /> Back to leaderboard
       </Link>
@@ -133,9 +133,9 @@ export function ReviewDetail({ review, allReviews }: { review: Review; allReview
               {derived.map((d) => (
                 <div
                   key={d.label}
-                  className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 text-center"
+                  className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 text-center"
                 >
-                  <p className="text-lg font-bold text-orange-200">{d.value.toFixed(2)}</p>
+                  <p className="text-lg font-bold text-amber-200">{d.value.toFixed(2)}</p>
                   <p className="text-[10px] uppercase tracking-wide text-zinc-500">{d.label}</p>
                 </div>
               ))}

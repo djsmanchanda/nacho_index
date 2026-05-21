@@ -18,7 +18,7 @@ export function AddReviewLogin({
     <Card className="mx-auto max-w-md">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <LockKeyhole className="h-4 w-4 text-orange-400" />
+          <LockKeyhole className="h-4 w-4 text-amber-400" />
           Review access
         </CardTitle>
       </CardHeader>

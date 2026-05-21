@@ -27,7 +27,7 @@ export default async function EditReviewsPage({
   return (
     <div>
       <section className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-orange-400/90">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400/90">
           Protected index
         </p>
         <h2 className="mt-2 text-3xl font-bold text-zinc-50">Edit reviews</h2>
