@@ -17,7 +17,7 @@ export default async function HomePage() {
     <div>
       <section className="mb-10">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400/90">
-          Divjot's · Live Index
+          Divjot&apos;s · Live Index
         </p>
         <h2 className="mt-2 text-3xl font-bold text-zinc-50 sm:text-4xl">
           Nacho Index Leaderboard

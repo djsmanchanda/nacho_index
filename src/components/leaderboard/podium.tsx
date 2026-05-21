@@ -32,7 +32,7 @@ export function Podium({ topThree }: { topThree: Review[] }) {
         </h2>
       </div>
       <div className="grid items-end gap-4 md:grid-cols-3">
-        {slots.map((review, displayIndex) => {
+        {slots.map((review) => {
           const rank = topThree.indexOf(review) + 1;
           const isFirst = rank === 1;
           const style = rankStyles[rank - 1] ?? rankStyles[1];
