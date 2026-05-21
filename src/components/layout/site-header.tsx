@@ -19,7 +19,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
         <Link href="/" className="group flex items-center gap-3">
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl border border-orange-400/20 bg-orange-500/5 shadow-lg shadow-orange-500/20 transition group-hover:scale-105 group-hover:border-orange-300/35">
+          <div className="relative flex h-12 w-12 items-center justify-center transition duration-300 [filter:drop-shadow(0_8px_18px_rgba(245,158,11,0.35))] group-hover:scale-105 group-hover:[filter:drop-shadow(0_10px_24px_rgba(245,158,11,0.5))]">
             <Image
               src="/nacho-icon.png"
               alt="Nacho Index logo"
